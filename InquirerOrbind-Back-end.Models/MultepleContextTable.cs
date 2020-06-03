@@ -7,5 +7,9 @@ namespace InquirerOrbind_Back_end.Models {
         public int UserId { get; set; }
 
         public User User { get; set; }
+
+        public int DetailId { get; set; }
+         
+        public UserDetail DetailUser { get; set; } 
     }
 }

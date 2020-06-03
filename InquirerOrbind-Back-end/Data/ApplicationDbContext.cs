@@ -9,6 +9,8 @@ namespace InquirerOrbind_Back_end.Data {
     public class ApplicationDbContext : DbContext {
         public DbSet<User> Users { get; set; }
 
+        public DbSet<UserDetail> UserDetailы { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
            : base(options) {
             //Database.EnsureDeleted();
@@ -21,6 +23,10 @@ namespace InquirerOrbind_Back_end.Data {
 
             modelBuilder.Entity<MultepleContextTable>()
                .HasOne(sc => sc.User)
+               .WithMany(s => s.MultepleContextTables);
+
+            modelBuilder.Entity<MultepleContextTable>()
+               .HasOne(sc => sc.DetailUser)
                .WithMany(s => s.MultepleContextTables);
         }
     }
