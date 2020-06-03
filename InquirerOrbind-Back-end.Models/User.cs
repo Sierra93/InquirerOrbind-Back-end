@@ -20,10 +20,14 @@ namespace InquirerOrbind_Back_end.Models {
         [Required(ErrorMessage = "Не указана почта."), Column("email")]
         public string Email { get; set; }
 
+        [Required(ErrorMessage = "Не указан номер телефона."), Column("number")]
+        public string Number { get; set; }
+
         [Required(ErrorMessage = "Не указан пароль."), Column("password")]
         public string Password { get; set; }
 
         public List<MultepleContextTable> MultepleContextTables { get; set; }
+
         public User() {
             MultepleContextTables = new List<MultepleContextTable>();
         }
