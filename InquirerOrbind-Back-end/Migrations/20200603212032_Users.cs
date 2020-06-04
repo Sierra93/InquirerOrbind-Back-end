@@ -7,6 +7,24 @@ namespace InquirerOrbind_Back_end.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "UserDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    login = table.Column<string>(type: "nvarchar(500)", nullable: true),
+                    avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    first_name = table.Column<string>(type: "nvarchar(500)", nullable: true),
+                    last_name = table.Column<string>(type: "nvarchar(500)", nullable: true),
+                    email = table.Column<string>(type: "nvarchar(500)", nullable: true),
+                    points = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserDetails", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -14,6 +32,7 @@ namespace InquirerOrbind_Back_end.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     login = table.Column<string>(nullable: false),
                     email = table.Column<string>(nullable: false),
+                    number = table.Column<string>(nullable: false),
                     password = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -27,11 +46,19 @@ namespace InquirerOrbind_Back_end.Migrations
                 {
                     UserId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId1 = table.Column<int>(nullable: false)
+                    UserId1 = table.Column<int>(nullable: false),
+                    DetailId = table.Column<int>(nullable: false),
+                    DetailUserId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MultepleContextTable", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_MultepleContextTable_UserDetails_DetailUserId",
+                        column: x => x.DetailUserId,
+                        principalTable: "UserDetails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_MultepleContextTable_Users_UserId1",
                         column: x => x.UserId1,
@@ -39,6 +66,11 @@ namespace InquirerOrbind_Back_end.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MultepleContextTable_DetailUserId",
+                table: "MultepleContextTable",
+                column: "DetailUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MultepleContextTable_UserId1",
@@ -50,6 +82,9 @@ namespace InquirerOrbind_Back_end.Migrations
         {
             migrationBuilder.DropTable(
                 name: "MultepleContextTable");
+
+            migrationBuilder.DropTable(
+                name: "UserDetails");
 
             migrationBuilder.DropTable(
                 name: "Users");

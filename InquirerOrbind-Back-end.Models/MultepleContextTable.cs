@@ -10,6 +10,10 @@ namespace InquirerOrbind_Back_end.Models {
 
         public int DetailId { get; set; }
          
-        public UserDetail DetailUser { get; set; } 
+        public UserDetail DetailUser { get; set; }
+
+        public int QuestionId { get; set; }
+
+        public Question Question { get; set; }
     }
 }

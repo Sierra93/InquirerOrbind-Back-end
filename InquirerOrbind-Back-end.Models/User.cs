@@ -26,6 +26,8 @@ namespace InquirerOrbind_Back_end.Models {
         [Required(ErrorMessage = "Не указан пароль."), Column("password")]
         public string Password { get; set; }
 
+        public string Test { get; set; }
+
         public List<MultepleContextTable> MultepleContextTables { get; set; }
 
         public User() {

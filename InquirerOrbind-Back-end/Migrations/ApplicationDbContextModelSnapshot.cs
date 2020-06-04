@@ -110,7 +110,7 @@ namespace InquirerOrbind_Back_end.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserDetailы");
+                    b.ToTable("UserDetails");
                 });
 
             modelBuilder.Entity("InquirerOrbind_Back_end.Models.MultepleContextTable", b =>
