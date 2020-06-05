@@ -8,12 +8,13 @@ namespace InquirerOrbind_Back_end.Models {
     /// <summary>
     /// Модель описывает опросы.
     /// </summary>
+    [Table("Questions")]
     public class Question {
         [Key]
         public int Id { get; set; }
 
         [Column("user_id", TypeName = "int")]
-        public int UserId { get; set; }
+        public int UserId { get; set; } // Id пользователя.
 
         [Column("category", TypeName = "nvarchar(500)")]
         public string Category { get; set; }  // Категория опроса.

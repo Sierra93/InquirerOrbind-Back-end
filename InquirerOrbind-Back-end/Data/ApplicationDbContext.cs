@@ -16,7 +16,7 @@ namespace InquirerOrbind_Back_end.Data {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
            : base(options) {
             //Database.EnsureDeleted();
-            //Database.EnsureCreated();
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {

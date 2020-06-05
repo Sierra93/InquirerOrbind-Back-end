@@ -9,6 +9,7 @@ namespace InquirerOrbind_Back_end.Models {
     /// <summary>
     /// Модель описывает детальную информацию о пользователе.
     /// </summary>
+    [Table("UserDetails")]
     public class UserDetail {
         [Key]
         public int Id { get; set; }

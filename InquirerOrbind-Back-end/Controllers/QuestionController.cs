@@ -27,8 +27,22 @@ namespace InquirerOrbind_Back_end.Controllers {
         /// <returns></returns>
         [HttpPost, Route("create")]
         public async Task<IActionResult> CreateQuestion([FromBody] Question question) {
-            await db.Questions.AddRangeAsync(question);
+            if (question.UserId == 0) {
+                throw new ArgumentNullException("Id пользователя не передан.");
+            }
 
+            // Ищет пользователя по его Id.
+            var oUser = await db.Users.Where(u => u.Id == question.UserId).FirstOrDefaultAsync();
+            var oUserDetail = await db.UserDetails.Where(u => u.Login.Equals(oUser.Login)).FirstOrDefaultAsync();
+
+            // Раз опрос создан, то нужно добавить + 10 баллов тому, кто его создал.
+            oUserDetail.Points += 10;
+            db.UpdateRange(oUserDetail);
+            await db.SaveChangesAsync();
+
+            await db.Questions.AddRangeAsync(question);
+            await db.SaveChangesAsync();
+                        
             return Ok("Опрос успешно создан.");
         }
 
@@ -49,11 +63,12 @@ namespace InquirerOrbind_Back_end.Controllers {
         /// <returns></returns>
         [HttpPost, Route("add-like")]
         public async Task<ActionResult> AddLike([FromBody] Question question) {
-            var oQuestion = await db.Questions.Where(q => q.Id == question.Id).FirstOrDefaultAsync();
+            var oQuestion = await db.Questions.Where(q => q.UserId == question.Id).FirstOrDefaultAsync();
             question.CountLike++;
 
+            db.UpdateRange(question);
 
-            return Ok();
+            return Ok("Лайк успешно проставлен.");
         }
     }
 }
