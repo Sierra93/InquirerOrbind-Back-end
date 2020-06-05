@@ -63,10 +63,11 @@ namespace InquirerOrbind_Back_end.Controllers {
         /// <returns></returns>
         [HttpPost, Route("add-like")]
         public async Task<ActionResult> AddLike([FromBody] Question question) {
-            var oQuestion = await db.Questions.Where(q => q.UserId == question.Id).FirstOrDefaultAsync();
-            question.CountLike++;
+            var oQuestion = await db.Questions.Where(q => q.Id == question.Id).FirstOrDefaultAsync();
+            oQuestion.CountLike++;
 
-            db.UpdateRange(question);
+            db.UpdateRange(oQuestion);
+            await db.SaveChangesAsync();
 
             return Ok("Лайк успешно проставлен.");
         }
