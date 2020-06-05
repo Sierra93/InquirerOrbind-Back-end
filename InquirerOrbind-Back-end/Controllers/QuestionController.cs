@@ -43,7 +43,7 @@ namespace InquirerOrbind_Back_end.Controllers {
             await db.Questions.AddRangeAsync(question);
             await db.SaveChangesAsync();
                         
-            return Ok("Опрос успешно создан.");
+            return Ok("Опрос успешно создан. Начислено 10 баллов.");
         }
 
         /// <summary>
@@ -65,11 +65,19 @@ namespace InquirerOrbind_Back_end.Controllers {
         public async Task<ActionResult> AddLike([FromBody] Question question) {
             var oQuestion = await db.Questions.Where(q => q.Id == question.Id).FirstOrDefaultAsync();
             oQuestion.CountLike++;
-
             db.UpdateRange(oQuestion);
             await db.SaveChangesAsync();
 
-            return Ok("Лайк успешно проставлен.");
+            // Ищет пользователя по его Id.
+            var oUser = await db.Users.Where(u => u.Id == question.UserId).FirstOrDefaultAsync();
+            var oUserDetail = await db.UserDetails.Where(u => u.Login.Equals(oUser.Login)).FirstOrDefaultAsync();
+
+            // Раз лайк проставлен, то нужно добавить + 1 балл тому, кто его проставил.
+            oUserDetail.Points++;
+            db.UpdateRange(oUserDetail);
+            await db.SaveChangesAsync();
+
+            return Ok("Лайк успешно проставлен. Начислен 1 балл.");
         }
     }
 }
