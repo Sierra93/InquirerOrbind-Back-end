@@ -27,7 +27,7 @@ namespace InquirerOrbind_Back_end.Controllers {
         /// <returns>Объект с данными пользователя.</returns>
         [HttpPost, Route("get-details")]
         public async Task<IActionResult> TakeDetails([FromBody] UserSignIn user) {
-            var oUser = await db.UserDetails.Where(u => u.Id == user.Id).FirstOrDefaultAsync(); ;
+            var oUser = await db.UserDetails.Where(u => u.Login.Equals(user.LoginOrEmail)).FirstOrDefaultAsync(); 
 
             return Ok(oUser);
         }

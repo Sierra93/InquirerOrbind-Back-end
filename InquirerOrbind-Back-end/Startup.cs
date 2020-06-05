@@ -54,7 +54,7 @@ namespace InquirerOrbind_Back_end {
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             app.UseCors(builder =>
-           builder.WithOrigins("https://dev1myprojects24.xyz", "https://dev1myprojects24.xyz/reg.html", "https://dev1myprojects24.xyz/", "http://127.0.0.1:5500/index.html")
+           builder.WithOrigins("https://dev1myprojects24.xyz", "https://dev1myprojects24.xyz/")
          .AllowAnyHeader()
          .AllowAnyMethod()
          //.WithHeaders("X-Header1", "X-Header1")

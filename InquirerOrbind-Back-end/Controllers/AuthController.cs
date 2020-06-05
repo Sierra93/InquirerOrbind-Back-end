@@ -19,7 +19,7 @@ namespace InquirerOrbind_Back_end.Controllers {
     /// </summary>
     [ApiController, Route("api/data/auth")]
     public class AuthController : Controller {
-        ApplicationDbContext db;
+        ApplicationDbContext db;        
         public AuthController(ApplicationDbContext _context) {
             db = _context;
         }
@@ -46,9 +46,18 @@ namespace InquirerOrbind_Back_end.Controllers {
             // Хэширует пароль в MD5.
             var hashPassword = await HashMD5Service.HashPassword(sPassword);
             user.Password = hashPassword;
+            
+            UserDetail detail = new UserDetail() { 
+                Login = user.Login,
+                Email = user.Email
+            };
 
             // Добавляет нового пользователя в БД.
             await db.Users.AddRangeAsync(user);
+
+            // Добавляет детали пользователя.
+            await db.UserDetails.AddRangeAsync(detail);
+
             await db.SaveChangesAsync();
 
             return Ok("Пользователь успешно зарегистрирован.");
@@ -72,7 +81,7 @@ namespace InquirerOrbind_Back_end.Controllers {
             // Сравнивает хэши
             var isEqual = await EqualsHash(user.LoginOrEmail);
 
-            if (isEqual != checkHashString) {
+            if (!isEqual.Equals(checkHashString)) {
                 throw new ArgumentException("Не верный пароль.");
             }
 
@@ -123,7 +132,7 @@ namespace InquirerOrbind_Back_end.Controllers {
             bool isEmail = input.Contains("@"); // Проверяет логин передан или email.
 
             if (isEmail) {
-                var oUser = await db.Users.Where(u => u.Login == input).FirstOrDefaultAsync();
+                var oUser = await db.Users.Where(u => u.Login.Equals(input)).FirstOrDefaultAsync();
                 var claims = new List<Claim> {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, input)
                 };
@@ -131,7 +140,7 @@ namespace InquirerOrbind_Back_end.Controllers {
                 return claimsIdentity;
             }
             else {
-                var oUser = await db.Users.Where(u => u.Login == input).FirstOrDefaultAsync();
+                var oUser = await db.Users.Where(u => u.Login.Equals(input)).FirstOrDefaultAsync();
                 var claims = new List<Claim> {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, input)
                 };

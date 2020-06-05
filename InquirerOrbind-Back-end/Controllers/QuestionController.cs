@@ -29,7 +29,7 @@ namespace InquirerOrbind_Back_end.Controllers {
         public async Task<IActionResult> CreateQuestion([FromBody] Question question) {
             await db.Questions.AddRangeAsync(question);
 
-            return Ok();
+            return Ok("Опрос успешно создан.");
         }
 
         /// <summary>
@@ -41,6 +41,19 @@ namespace InquirerOrbind_Back_end.Controllers {
             var oQuestion = await db.Questions.Where(q => q.UserId == question.UserId).ToListAsync();
 
             return Ok(oQuestion);
+        }
+
+        /// <summary>
+        /// Метод добавляет лайк опросу.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost, Route("add-like")]
+        public async Task<ActionResult> AddLike([FromBody] Question question) {
+            var oQuestion = await db.Questions.Where(q => q.Id == question.Id).FirstOrDefaultAsync();
+            question.CountLike++;
+
+
+            return Ok();
         }
     }
 }

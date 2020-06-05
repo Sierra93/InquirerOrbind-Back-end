@@ -24,8 +24,8 @@ namespace InquirerOrbind_Back_end.Models {
         [Column("details", TypeName = "nvarchar(max)")]
         public string Details { get; set; } // Текст опроса.
 
-        [Column("points", TypeName = "int")]
-        public int Points { get; set; } // Количество баллов.
+        [Column("count_like", TypeName = "int")]
+        public int CountLike { get; set; }  // Кол-во лайков опроса.
 
         public List<MultepleContextTable> MultepleContextTables { get; set; }
 
