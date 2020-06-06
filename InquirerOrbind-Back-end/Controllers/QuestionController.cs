@@ -85,7 +85,7 @@ namespace InquirerOrbind_Back_end.Controllers {
         /// </summary>
         /// <returns>Список опросов.</returns>
         [HttpPost, Route("get-all-question")]
-        public async Task<IActionResult> TakeAllQuestion([FromBody] Question question) {
+        public async Task<IActionResult> TakeAllQuestion() {
             var oQuestions = await db.Questions.ToListAsync();
 
             return Ok(oQuestions);
@@ -100,6 +100,21 @@ namespace InquirerOrbind_Back_end.Controllers {
             var oQuestions = await db.Questions.Where(q => q.Id == question.Id).FirstOrDefaultAsync();
 
             return Ok(oQuestions);
+        }
+
+        /// <summary>
+        /// Метод добавляет ответ к опросу.
+        /// </summary>
+        /// <param name="question"></param>
+        /// <returns></returns>
+        [HttpPost, Route("add-answer")]
+        public async Task<IActionResult> AddAnswer([FromBody] Question question) {
+            var oUser = await db.Questions.Where(q => q.QuestionId == question.QuestionId).FirstOrDefaultAsync();
+            oUser.AcceptAnswer = question.AcceptAnswer;
+            db.UpdateRange(oUser);
+            await db.SaveChangesAsync();
+
+            return Ok("Ответ на опрос успешно добавлен.");
         }
     }
 }

@@ -15,16 +15,25 @@ namespace InquirerOrbind_Back_end.Models {
         public int Id { get; set; }
 
         [Column("login", TypeName = "nvarchar(500)")]
-        public string Login { get; set; }
+        public string Login { get; set; }   // Логин.
 
         [Column("avatar", TypeName = "nvarchar(max)")]
-        public string Avatar { get; set; }
+        public string Avatar { get; set; }  // Аватар.
 
         [Column("first_name", TypeName = "nvarchar(500)")]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; }   // Имя.
+
+        [Column("middle_name", TypeName = "nvarchar(max)")]
+        public string MiddleName { get; set; }  // Отчество.
+
+        [Column("age", TypeName = "int")]
+        public int? Age { get; set; }    // Возраст.
+
+        [Column("floor", TypeName = "nvarchar(10)")]
+        public string Floor { get; set; } 
 
         [Column("last_name", TypeName = "nvarchar(500)")]
-        public string LastName { get; set; } 
+        public string LastName { get; set; }    // Фамилия.
 
         [Column("email", TypeName = "nvarchar(500)")]
         public string Email { get; set; }

@@ -36,7 +36,9 @@ namespace InquirerOrbind_Back_end.Controllers {
         /// </summary>
         /// <returns></returns>
         [HttpPost, Route("buy")]
-        public async Task<IActionResult> Buy() {
+        public async Task<IActionResult> Buy([FromBody] UserSignIn user) {
+            //var oUser = await db
+
             return Ok();    // Вернуть купленный приз. через {}
         }
     }
