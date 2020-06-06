@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InquirerOrbind_Back_end.Core;
 using InquirerOrbind_Back_end.Data;
 using InquirerOrbind_Back_end.Models;
 using Microsoft.AspNetCore.Http;
@@ -36,8 +37,16 @@ namespace InquirerOrbind_Back_end.Controllers {
         /// </summary>
         /// <returns></returns>
         [HttpPost, Route("buy")]
-        public async Task<IActionResult> Buy([FromBody] UserSignIn user) {
-            //var oUser = await db
+        public async Task<IActionResult> Buy([FromBody] BuyPrize user) {
+            // Находит пользователя.
+            var oUser = await db.UserDetails.Where(u => u.Id == user.Id).FirstOrDefaultAsync();
+            int userPoints = oUser.Points;
+
+            // Выбирает подарок или бонус, которым интересуется пользователь.
+            var oPrize = await db.Prizes.Where(p => p.Id == user.PrizeId).FirstOrDefaultAsync();
+
+            // Проверяет, хватает ли бонусов для обмена.
+            //if ()
 
             return Ok();    // Вернуть купленный приз. через {}
         }
