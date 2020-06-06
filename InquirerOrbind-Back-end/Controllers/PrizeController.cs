@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InquirerOrbind_Back_end.Data;
+using InquirerOrbind_Back_end.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace InquirerOrbind_Back_end.Controllers {
     /// <summary>
@@ -23,8 +25,10 @@ namespace InquirerOrbind_Back_end.Controllers {
         /// </summary>
         /// <returns></returns>
         [HttpPost, Route("get-prize")]
-        public async Task<IActionResult> TakePrize() {
-            return Ok();
+        public async Task<IActionResult> TakePrize([FromBody] Prize prize) {
+            var oPrizes = await db.Prizes.ToListAsync();
+
+            return Ok(oPrizes);
         }
 
         /// <summary>

@@ -13,6 +13,8 @@ namespace InquirerOrbind_Back_end.Data {
 
         public DbSet<Question> Questions { get; set; }
 
+        public DbSet<Prize> Prizes { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
            : base(options) {
             //Database.EnsureDeleted();
@@ -34,6 +36,10 @@ namespace InquirerOrbind_Back_end.Data {
             modelBuilder.Entity<MultepleContextTable>()
                .HasOne(sc => sc.Question)
                .WithMany(s => s.MultepleContextTables);
+
+            modelBuilder.Entity<MultepleContextTable>()
+              .HasOne(sc => sc.Prize)
+              .WithMany(s => s.MultepleContextTables);
         }
     }
 }

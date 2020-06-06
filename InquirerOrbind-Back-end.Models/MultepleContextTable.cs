@@ -15,5 +15,9 @@ namespace InquirerOrbind_Back_end.Models {
         public int QuestionId { get; set; }
 
         public Question Question { get; set; }
+
+        public int PrizeId { get; set; }
+
+        public Prize Prize { get; set; } 
     }
 }
