@@ -49,7 +49,7 @@ namespace InquirerOrbind_Back_end.Controllers {
         /// <summary>
         /// Метод выбирает опросы, созданные пользователем.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Список опросов.</returns>
         [HttpPost, Route("get-question")]
         public async Task<IActionResult> TakeQuestion([FromBody] Question question) {
             var oQuestion = await db.Questions.Where(q => q.UserId == question.UserId).ToListAsync();
@@ -62,7 +62,7 @@ namespace InquirerOrbind_Back_end.Controllers {
         /// </summary>
         /// <returns></returns>
         [HttpPost, Route("add-like")]
-        public async Task<ActionResult> AddLike([FromBody] Question question) {
+        public async Task<IActionResult> AddLike([FromBody] Question question) {
             var oQuestion = await db.Questions.Where(q => q.Id == question.Id).FirstOrDefaultAsync();
             oQuestion.CountLike++;
             db.UpdateRange(oQuestion);
@@ -78,6 +78,15 @@ namespace InquirerOrbind_Back_end.Controllers {
             await db.SaveChangesAsync();
 
             return Ok("Лайк успешно проставлен. Начислен 1 балл.");
+        }
+
+        /// <summary>
+        /// Метод выбирает все опросы, кроме тех, которые создал пользователь.
+        /// </summary>
+        /// <returns>Список опросов.</returns>
+        [HttpPost, Route("get-all-question")]
+        public async Task<IActionResult> TakeAllQuestion() {
+            throw new NotImplementedException();
         }
     }
 }

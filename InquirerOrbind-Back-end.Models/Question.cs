@@ -6,7 +6,7 @@ using System.Text;
 
 namespace InquirerOrbind_Back_end.Models {
     /// <summary>
-    /// Модель описывает опросы.
+    /// Модель описывает вывод опроса.
     /// </summary>
     [Table("Questions")]
     public class Question {
@@ -27,6 +27,24 @@ namespace InquirerOrbind_Back_end.Models {
 
         [Column("count_like", TypeName = "int")]
         public int CountLike { get; set; }  // Кол-во лайков опроса.
+
+        [Column("accept_answer", TypeName = "nvarchar(max)")]
+        public string AcceptAnswer { get; set; }    // Принятый ответ на опрос.
+
+        [Column("answer_1", TypeName = "nvarchar(max)")]
+        public string Answer_1 { get; set; }
+
+        [Column("answer_2", TypeName = "nvarchar(max)")]
+        public string Answer_2 { get; set; }
+
+        [Column("answer_3", TypeName = "nvarchar(max)")]
+        public string Answer_3 { get; set; }
+
+        [Column("answer_4", TypeName = "nvarchar(max)")]
+        public string Asnwer_4 { get; set; }
+
+        [Column("answer_5", TypeName = "nvarchar(max)")]
+        public string Answer_5 { get; set; } 
 
         public List<MultepleContextTable> MultepleContextTables { get; set; }
 
