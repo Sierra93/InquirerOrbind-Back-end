@@ -14,7 +14,7 @@ namespace InquirerOrbind_Back_end.Models {
         public int Id { get; set; }
 
         [Column("user_id", TypeName = "int")]
-        public int UserId { get; set; } // Id пользователя.
+        public int? UserId { get; set; } // Id пользователя.
 
         [Column("question_id", TypeName = "int")]
         public int? QuestionId { get; set; } 
@@ -29,7 +29,7 @@ namespace InquirerOrbind_Back_end.Models {
         public string Details { get; set; } // Текст опроса.
 
         [Column("count_like", TypeName = "int")]
-        public int CountLike { get; set; }  // Кол-во лайков опроса.
+        public int? CountLike { get; set; }  // Кол-во лайков опроса.
 
         [Column("accept_answer", TypeName = "nvarchar(max)")]
         public string AcceptAnswer { get; set; }    // Принятый ответ на опрос.

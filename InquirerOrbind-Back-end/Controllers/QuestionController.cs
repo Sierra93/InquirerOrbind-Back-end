@@ -109,7 +109,8 @@ namespace InquirerOrbind_Back_end.Controllers {
         /// <returns></returns>
         [HttpPost, Route("add-answer")]
         public async Task<IActionResult> AddAnswer([FromBody] Question question) {
-            var oUser = await db.Questions.Where(q => q.QuestionId == question.QuestionId).FirstOrDefaultAsync();
+            // Выбирает опрос, на который отвечает пользователь.
+            var oUser = await db.Questions.Where(q => q.Id == question.QuestionId).FirstOrDefaultAsync();
             oUser.AcceptAnswer = question.AcceptAnswer;
             db.UpdateRange(oUser);
             await db.SaveChangesAsync();

@@ -44,9 +44,17 @@ namespace InquirerOrbind_Back_end.Controllers {
 
             // Выбирает подарок или бонус, которым интересуется пользователь.
             var oPrize = await db.Prizes.Where(p => p.Id == user.PrizeId).FirstOrDefaultAsync();
+            int pricePrize = oPrize.Points;
 
             // Проверяет, хватает ли бонусов для обмена.
-            //if ()
+            if (userPoints >= pricePrize) {
+                userPoints -= pricePrize;
+                db.UpdateRange(oUser);
+                await db.SaveChangesAsync();
+            }
+            else {
+                throw new ArgumentException("Не хватает баллов для обмена.");
+            }
 
             return Ok();    // Вернуть купленный приз. через {}
         }
