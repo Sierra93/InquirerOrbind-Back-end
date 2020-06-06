@@ -85,8 +85,21 @@ namespace InquirerOrbind_Back_end.Controllers {
         /// </summary>
         /// <returns>Список опросов.</returns>
         [HttpPost, Route("get-all-question")]
-        public async Task<IActionResult> TakeAllQuestion() {
-            throw new NotImplementedException();
+        public async Task<IActionResult> TakeAllQuestion([FromBody] Question question) {
+            var oQuestions = await db.Questions.ToListAsync();
+
+            return Ok(oQuestions);
+        }
+
+        /// <summary>
+        /// Метод выбирает конкретный опрос (не обязательно свой).
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost, Route("get-concrete-question")]
+        public async Task<IActionResult> TakeConcretele([FromBody] Question question) {
+            var oQuestions = await db.Questions.Where(q => q.Id == question.Id).FirstOrDefaultAsync();
+
+            return Ok(oQuestions);
         }
     }
 }
